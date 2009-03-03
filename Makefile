@@ -24,6 +24,19 @@ checkenv:
 	@@echo -n "canvas/      "; if [ ! -d canvas/      ]; then echo "not found\nFAIL!"; exit; else echo "found"; fi
 	@@echo "OK!\n"
 
+quick: checkenv
+	@@echo "*** Building 4query core ***"
+	@@cd core; make PREFIX=${PREFIX} DIST_DIR=${DIST_DIR}/${JS_DIRNAME} quick
+	@@echo
+	
+	@@echo "*** Building 4query.interactive ***"
+	@@cd interactive; make PREFIX=${PREFIX} DIST_DIR=${DIST_DIR}/interactive WEB="../js" all
+	@@echo
+	
+	@@echo "*** Building 4query.canvas ***"
+	@@cd canvas; make PREFIX=${PREFIX} DIST_DIR=${DIST_DIR}/${JS_DIRNAME} all
+	@@echo
+
 all: checkenv
 	@@echo "*** Building 4query core ***"
 	@@cd core; make PREFIX=${PREFIX} DIST_DIR=${DIST_DIR}/${JS_DIRNAME} all
